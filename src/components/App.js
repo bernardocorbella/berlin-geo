@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import { Map, TileLayer } from "react-leaflet";
+import { Map, TileLayer, GeoJSON } from "react-leaflet";
 
 import { BERLIN_CENTER } from "../constants";
 import { fetchData } from "../helpers";
@@ -29,14 +29,17 @@ class App extends Component {
   }
 
   render() {
+    const { data, loading } = this.state;
+
     return (
       <MapContainer>
         <GlobalStyle />
         <Map
-          zoom={13}
+          zoom={11}
           style={{ height: "100vh", width: "100vw" }}
           center={BERLIN_CENTER}
         >
+          {!loading && data && <GeoJSON data={data} />}
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}"

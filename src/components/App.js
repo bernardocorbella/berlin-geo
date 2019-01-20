@@ -3,12 +3,16 @@ import styled, { createGlobalStyle } from "styled-components";
 import { Map, TileLayer, GeoJSON } from "react-leaflet";
 
 import { BERLIN_CENTER } from "../constants";
-import { fetchData, getColorByAge } from "../helpers";
+import { fetchData, getColorByAge, getPopupString } from "../helpers";
 
 const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
+  }
+
+  .leaflet-popup-content p {
+    margin: 0 0 8px;
   }
 `;
 
@@ -45,6 +49,11 @@ class App extends Component {
               style={feature => ({
                 color: getColorByAge(feature.properties.averageAge)
               })}
+              onEachFeature={(feature, layer) => {
+                const popupContent = getPopupString(feature.properties);
+
+                layer.bindPopup(popupContent);
+              }}
             />
           )}
           <TileLayer

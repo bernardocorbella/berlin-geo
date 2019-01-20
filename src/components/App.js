@@ -3,7 +3,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import { Map, TileLayer, GeoJSON } from "react-leaflet";
 
 import { BERLIN_CENTER } from "../constants";
-import { fetchData } from "../helpers";
+import { fetchData, getColorByAge } from "../helpers";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -39,7 +39,14 @@ class App extends Component {
           style={{ height: "100vh", width: "100vw" }}
           center={BERLIN_CENTER}
         >
-          {!loading && data && <GeoJSON data={data} />}
+          {!loading && data && (
+            <GeoJSON
+              data={data}
+              style={feature => ({
+                color: getColorByAge(feature.properties.averageAge)
+              })}
+            />
+          )}
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}"

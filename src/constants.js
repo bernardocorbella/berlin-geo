@@ -1,0 +1,1 @@
+export const BERLIN_CENTER = [52.520008, 13.404954];

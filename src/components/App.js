@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Map, TileLayer } from "react-leaflet";
 
+import { BERLIN_CENTER } from "../constants";
+import { fetchData } from "../helpers";
+
 const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
@@ -15,6 +18,16 @@ const MapContainer = styled.main`
 `;
 
 class App extends Component {
+  state = {
+    data: [],
+    error: null,
+    loading: true
+  };
+
+  componentDidMount() {
+    fetchData.then(data => this.setState({ data, loading: false }));
+  }
+
   render() {
     return (
       <MapContainer>
@@ -22,7 +35,7 @@ class App extends Component {
         <Map
           zoom={13}
           style={{ height: "100vh", width: "100vw" }}
-          center={[52.520008, 13.404954]}
+          center={BERLIN_CENTER}
         >
           <TileLayer
             attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

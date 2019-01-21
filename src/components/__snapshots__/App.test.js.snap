@@ -23,6 +23,7 @@ Array [
         accessToken="pk.eyJ1IjoiYmVybmFyZG9jb3JiZWxsYSIsImEiOiJjanI0eGhkZncxaXQ5NDZxbDBqcWV1MXFvIn0.ypPwUSVXgtwM6J783qMh0g"
         attribution="&copy <a href=\\"http://osm.org/copyright\\">OpenStreetMap</a> contributors"
         id="mapbox.streets"
+        opacity={0.5}
         url="https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}"
       />
     </Map>

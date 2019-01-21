@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@turf/area": "^5.1.6",
+    "@turf/length": "^6.0.2",
     "leaflet": "^1.4.0",
     "lodash.get": "^4.4.2",
     "react": "^16.7.0",

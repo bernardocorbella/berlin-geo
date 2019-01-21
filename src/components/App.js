@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { Map, TileLayer, GeoJSON } from "react-leaflet";
+import area from "@turf/area";
+import length from "@turf/length";
 
 import { BERLIN_CENTER } from "../constants";
-import { fetchData, getColorByAge, getPopupString } from "../helpers";
+import {
+  fetchData,
+  getColorByAge,
+  getPopupString,
+  numberFormatter
+} from "../helpers";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -50,7 +57,15 @@ class App extends Component {
                 color: getColorByAge(feature.properties.averageAge)
               })}
               onEachFeature={(feature, layer) => {
-                const popupContent = getPopupString(feature.properties);
+                const properties = Object.assign(feature.properties, {
+                  // TODO: Find out why this formula is wrong
+                  area: numberFormatter(area(feature) / 1000),
+                  // TODO: This result is also wrong
+                  ring: numberFormatter(
+                    length(feature, { units: "kilometers" })
+                  )
+                });
+                const popupContent = getPopupString(properties);
 
                 layer.bindPopup(popupContent);
               }}
@@ -61,6 +76,7 @@ class App extends Component {
             url="https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}"
             accessToken={process.env.REACT_APP_MAPBOX_API_TOKEN}
             id="mapbox.streets"
+            opacity={loading ? 0.5 : 1}
           />
         </Map>
       </MapContainer>

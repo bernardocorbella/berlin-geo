@@ -1,3 +1,7 @@
+# Instructions
+
+In order for this project to run, please copy `frontend-geo.json` to `src/data/`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
